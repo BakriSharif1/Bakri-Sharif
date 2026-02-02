@@ -1,0 +1,309 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bakri Sharif</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;500;600;700&family=Unbounded:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #03040a;
+        --bg-deep: #050a18;
+        --text: #f3f6ff;
+        --muted: #8aa0c4;
+        --accent: #8cf7ff;
+        --accent-2: #ffd56a;
+        --glow: rgba(140, 247, 255, 0.35);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+
+      body {
+        font-family: "Manrope", system-ui, sans-serif;
+        color: var(--text);
+        background: radial-gradient(circle at 20% 10%, rgba(140, 247, 255, 0.08), transparent 40%),
+          radial-gradient(circle at 80% 20%, rgba(255, 213, 106, 0.12), transparent 45%),
+          radial-gradient(circle at 60% 80%, rgba(126, 255, 184, 0.08), transparent 50%),
+          linear-gradient(150deg, var(--bg), var(--bg-deep));
+        overflow: hidden;
+        display: grid;
+        place-items: center;
+      }
+
+      .space {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .nebula {
+        position: absolute;
+        inset: -20% -10% auto auto;
+        width: 60vmax;
+        height: 60vmax;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(140, 247, 255, 0.18), transparent 70%);
+        filter: blur(60px);
+        opacity: 0.6;
+        mix-blend-mode: screen;
+        animation: drift 20s ease-in-out infinite;
+      }
+
+      .stars {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(1px 1px at 20px 30px, rgba(255, 255, 255, 0.8), transparent),
+          radial-gradient(1px 1px at 80px 120px, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(1px 1px at 140px 60px, rgba(255, 255, 255, 0.7), transparent),
+          radial-gradient(1px 1px at 200px 90px, rgba(255, 255, 255, 0.6), transparent),
+          radial-gradient(1px 1px at 260px 40px, rgba(255, 255, 255, 0.8), transparent),
+          radial-gradient(1px 1px at 320px 150px, rgba(255, 255, 255, 0.7), transparent),
+          radial-gradient(1px 1px at 380px 70px, rgba(255, 255, 255, 0.9), transparent);
+        background-size: 400px 200px;
+        animation: twinkle 6s ease-in-out infinite;
+        opacity: 0.65;
+      }
+
+      .stars.layer-two {
+        background-size: 600px 320px;
+        animation-duration: 8s;
+        opacity: 0.45;
+      }
+
+      .stars.layer-three {
+        background-size: 900px 480px;
+        animation-duration: 10s;
+        opacity: 0.35;
+      }
+
+      .cursor-glow {
+        position: fixed;
+        width: 240px;
+        height: 240px;
+        border-radius: 50%;
+        background: radial-gradient(circle, var(--glow), transparent 60%);
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 200ms ease;
+        z-index: 1;
+      }
+
+      main {
+        position: relative;
+        z-index: 2;
+        width: min(900px, 90vw);
+        display: grid;
+        gap: clamp(20px, 4vh, 32px);
+        text-align: center;
+      }
+
+      h1 {
+        font-family: "Unbounded", "Manrope", sans-serif;
+        font-size: clamp(2.6rem, 6vw, 4.8rem);
+        margin: 0;
+        letter-spacing: 0.02em;
+      }
+
+      .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px 26px;
+        justify-content: center;
+      }
+
+      .link {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.05rem;
+        padding: 6px 10px;
+        border-radius: 999px;
+        transition: transform 200ms ease, color 200ms ease, text-shadow 200ms ease;
+      }
+
+      .link::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        left: 0;
+        bottom: -6px;
+        background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        opacity: 0;
+        transition: opacity 200ms ease;
+      }
+
+      .link:hover {
+        color: var(--accent);
+        transform: translateY(-2px);
+        text-shadow: 0 0 20px rgba(140, 247, 255, 0.5);
+      }
+
+      .link:hover::after {
+        opacity: 1;
+      }
+
+      .icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: rgba(140, 247, 255, 0.12);
+        border: 1px solid rgba(140, 247, 255, 0.4);
+      }
+
+      .icon svg {
+        width: 18px;
+        height: 18px;
+        fill: currentColor;
+        color: var(--accent);
+      }
+
+      .footer {
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      @keyframes twinkle {
+        0%,
+        100% {
+          opacity: 0.4;
+        }
+        50% {
+          opacity: 0.85;
+        }
+      }
+
+      @keyframes drift {
+        0%,
+        100% {
+          transform: translate3d(0, 0, 0) scale(1);
+        }
+        50% {
+          transform: translate3d(-4%, 6%, 0) scale(1.08);
+        }
+      }
+
+      @media (max-width: 720px) {
+        .links {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .stars,
+        .nebula {
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="space" aria-hidden="true">
+      <div class="nebula"></div>
+      <div class="stars"></div>
+      <div class="stars layer-two"></div>
+      <div class="stars layer-three"></div>
+    </div>
+    <div class="cursor-glow" aria-hidden="true"></div>
+
+    <main>
+      <h1>Bakri Sharif</h1>
+
+      <nav class="links" aria-label="Primary links">
+        <a class="link" href="https://github.com/BakriSharif1" target="_blank" rel="noreferrer">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 2C6.48 2 2 6.58 2 12.2c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.23.68-.5v-1.75c-2.78.62-3.37-1.2-3.37-1.2-.45-1.18-1.1-1.5-1.1-1.5-.9-.64.07-.63.07-.63 1 .08 1.53 1.05 1.53 1.05.9 1.55 2.37 1.1 2.95.84.1-.67.35-1.1.63-1.35-2.22-.26-4.56-1.14-4.56-5.1 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.31.1-2.73 0 0 .86-.28 2.8 1.05.82-.24 1.7-.36 2.58-.36.88 0 1.77.12 2.58.36 1.94-1.33 2.8-1.05 2.8-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.64 1.03 2.76 0 3.97-2.35 4.84-4.58 5.1.36.32.68.95.68 1.92v2.84c0 .28.18.6.69.5A10.2 10.2 0 0 0 22 12.2C22 6.58 17.52 2 12 2z"
+              />
+            </svg>
+          </span>
+          <span>GitHub</span>
+        </a>
+
+        <a class="link" href="https://www.linkedin.com/in/bakri-sharif" target="_blank" rel="noreferrer">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M4.98 3.5C3.33 3.5 2 4.85 2 6.52c0 1.65 1.31 3 2.95 3h.03c1.66 0 2.99-1.35 2.99-3C7.97 4.85 6.64 3.5 4.98 3.5zM2.4 21h5.17V9.72H2.4V21zM9.34 9.72V21h5.17v-6.3c0-3.37 4.4-3.64 4.4 0V21H24v-7.33c0-6.38-7.25-6.15-9.49-3.01V9.72H9.34z"
+              />
+            </svg>
+          </span>
+          <span>LinkedIn</span>
+        </a>
+
+        <a class="link" href="Software Engineer Resume.pdf" target="_blank" rel="noreferrer">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M6 2h8l4 4v16H6V2zm8 1.5V7h3.5L14 3.5zM8 11h8v1.5H8V11zm0 4h8v1.5H8V15zm0-8h5v1.5H8V7z"
+              />
+            </svg>
+          </span>
+          <span>Resume</span>
+        </a>
+
+        <a class="link" href="mailto:bakrisharif1@gmail.com">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zm0 2v.2l8 5 8-5V7H4zm16 10V9.3l-7.4 4.6a1.5 1.5 0 0 1-1.6 0L4 9.3V17h16z"
+              />
+            </svg>
+          </span>
+          <span>Email</span>
+        </a>
+
+        <a class="link" href="https://bakrimedia.mypixieset.com" target="_blank" rel="noreferrer">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M9 3h6l1.5 2H20a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3L9 3zm3 5.5A4.5 4.5 0 1 0 12 18a4.5 4.5 0 0 0 0-9.5zm0 2A2.5 2.5 0 1 1 12 16a2.5 2.5 0 0 1 0-5z"
+              />
+            </svg>
+          </span>
+          <span>Photography</span>
+        </a>
+      </nav>
+
+      <div class="footer">Toronto, Canada</div>
+    </main>
+
+    <script>
+      const glow = document.querySelector(".cursor-glow");
+
+      window.addEventListener("mousemove", (event) => {
+        glow.style.opacity = "1";
+        glow.style.left = `${event.clientX}px`;
+        glow.style.top = `${event.clientY}px`;
+      });
+
+      window.addEventListener("mouseleave", () => {
+        glow.style.opacity = "0";
+      });
+    </script>
+  </body>
+</html>
